@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- ${key}获取value值 -->
+	<properties resource="db.properties"/>
+	
+	<settings>
+		<!-- 开启分页以后就可以在映射接口方法中声明RowBounds对象了 -->
+		<setting name="safeRowBoundsEnabled" 
+	         value="true" /> 
+	    <setting name="mapUnderscoreToCamelCase" 
+	          value="false" /> 
+	    <setting name="jdbcTypeForNull" value="VARCHAR" /> 
+	</settings>
+	<environments default="abc">
+		<environment id="abc">
+			<transactionManager type="JDBC" />
+			<!-- <dataSource type="JNDI">
+					<property name="data_source" 
+						value="java:comp/env/jdbc/DefaultDS"/>
+				</dataSource> 
+			-->
+		 <dataSource type="POOLED">
+			<property name="driver" value="${driver}" /> 
+			<property name="url" value="${url}" /> 
+			<property name="username" value="${name}" /> 
+			<property name="password" value="${password}" /> 
+		  </dataSource> 
+		</environment>
+	</environments>
+	
+	<mappers>
+		<package name="com.briup.mapper"/>
+	</mappers>
+	
+</configuration>
+

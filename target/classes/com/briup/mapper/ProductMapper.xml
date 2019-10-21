@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.briup.bean.Product" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="IMG" property="img" jdbcType="VARCHAR" />
+    <result column="CLICKRATE" property="clickrate" jdbcType="DECIMAL" />
+    <result column="REMAIN" property="remain" jdbcType="DECIMAL" />
+    <result column="PARTPAY" property="partpay" jdbcType="VARCHAR" />
+    <result column="PRICEREDUCE" property="pricereduce" jdbcType="DECIMAL" />
+    <result column="CATEGORYTWO_ID" property="categorytwoId" jdbcType="DECIMAL" />
+    <result column="HOT" property="hot" jdbcType="DECIMAL" />
+    <result column="PRICE" property="price" jdbcType="DECIMAL" />
+    <result column="PUBLISH" property="publish" jdbcType="VARCHAR" />
+    <result column="PARAMETER" property="parameter" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PUBLISHDATE" property="publishdate" jdbcType="DECIMAL" />
+    <result column="QUIT" property="quit" jdbcType="VARCHAR" />
+    <result column="FREE" property="free" jdbcType="VARCHAR" />
+    <result column="WRAPLIST" property="wraplist" jdbcType="VARCHAR" />
+    <result column="INTRODUCTION" property="introduction" jdbcType="VARCHAR" />
+    <result column="SELLNUM" property="sellnum" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, IMG, CLICKRATE, REMAIN, PARTPAY, PRICEREDUCE, CATEGORYTWO_ID, HOT, PRICE, PUBLISH, 
+    PARAMETER, NAME, PUBLISHDATE, QUIT, FREE, WRAPLIST, INTRODUCTION, SELLNUM
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.briup.bean.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from PRODUCT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from PRODUCT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.briup.bean.ProductExample" >
+    delete from PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.briup.bean.Product" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="id" order="BEFORE" >
+      select dep_seq.nextVal from dual
+    </selectKey>
+    insert into PRODUCT (ID, IMG, CLICKRATE, 
+      REMAIN, PARTPAY, PRICEREDUCE, 
+      CATEGORYTWO_ID, HOT, PRICE, 
+      PUBLISH, PARAMETER, NAME, 
+      PUBLISHDATE, QUIT, FREE, 
+      WRAPLIST, INTRODUCTION, SELLNUM
+      )
+    values (#{id,jdbcType=DECIMAL}, #{img,jdbcType=VARCHAR}, #{clickrate,jdbcType=DECIMAL}, 
+      #{remain,jdbcType=DECIMAL}, #{partpay,jdbcType=VARCHAR}, #{pricereduce,jdbcType=DECIMAL}, 
+      #{categorytwoId,jdbcType=DECIMAL}, #{hot,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{publish,jdbcType=VARCHAR}, #{parameter,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{publishdate,jdbcType=DECIMAL}, #{quit,jdbcType=VARCHAR}, #{free,jdbcType=VARCHAR}, 
+      #{wraplist,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{sellnum,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.briup.bean.Product" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="id" order="BEFORE" >
+      select dep_seq.nextVal from dual
+    </selectKey>
+    insert into PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="img != null" >
+        IMG,
+      </if>
+      <if test="clickrate != null" >
+        CLICKRATE,
+      </if>
+      <if test="remain != null" >
+        REMAIN,
+      </if>
+      <if test="partpay != null" >
+        PARTPAY,
+      </if>
+      <if test="pricereduce != null" >
+        PRICEREDUCE,
+      </if>
+      <if test="categorytwoId != null" >
+        CATEGORYTWO_ID,
+      </if>
+      <if test="hot != null" >
+        HOT,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="publish != null" >
+        PUBLISH,
+      </if>
+      <if test="parameter != null" >
+        PARAMETER,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="publishdate != null" >
+        PUBLISHDATE,
+      </if>
+      <if test="quit != null" >
+        QUIT,
+      </if>
+      <if test="free != null" >
+        FREE,
+      </if>
+      <if test="wraplist != null" >
+        WRAPLIST,
+      </if>
+      <if test="introduction != null" >
+        INTRODUCTION,
+      </if>
+      <if test="sellnum != null" >
+        SELLNUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=DECIMAL},
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="clickrate != null" >
+        #{clickrate,jdbcType=DECIMAL},
+      </if>
+      <if test="remain != null" >
+        #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="partpay != null" >
+        #{partpay,jdbcType=VARCHAR},
+      </if>
+      <if test="pricereduce != null" >
+        #{pricereduce,jdbcType=DECIMAL},
+      </if>
+      <if test="categorytwoId != null" >
+        #{categorytwoId,jdbcType=DECIMAL},
+      </if>
+      <if test="hot != null" >
+        #{hot,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="publish != null" >
+        #{publish,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="publishdate != null" >
+        #{publishdate,jdbcType=DECIMAL},
+      </if>
+      <if test="quit != null" >
+        #{quit,jdbcType=VARCHAR},
+      </if>
+      <if test="free != null" >
+        #{free,jdbcType=VARCHAR},
+      </if>
+      <if test="wraplist != null" >
+        #{wraplist,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="sellnum != null" >
+        #{sellnum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.briup.bean.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from PRODUCT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PRODUCT
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.img != null" >
+        IMG = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clickrate != null" >
+        CLICKRATE = #{record.clickrate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remain != null" >
+        REMAIN = #{record.remain,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partpay != null" >
+        PARTPAY = #{record.partpay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricereduce != null" >
+        PRICEREDUCE = #{record.pricereduce,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categorytwoId != null" >
+        CATEGORYTWO_ID = #{record.categorytwoId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hot != null" >
+        HOT = #{record.hot,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null" >
+        PRICE = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publish != null" >
+        PUBLISH = #{record.publish,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameter != null" >
+        PARAMETER = #{record.parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishdate != null" >
+        PUBLISHDATE = #{record.publishdate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.quit != null" >
+        QUIT = #{record.quit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.free != null" >
+        FREE = #{record.free,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wraplist != null" >
+        WRAPLIST = #{record.wraplist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduction != null" >
+        INTRODUCTION = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sellnum != null" >
+        SELLNUM = #{record.sellnum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PRODUCT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      IMG = #{record.img,jdbcType=VARCHAR},
+      CLICKRATE = #{record.clickrate,jdbcType=DECIMAL},
+      REMAIN = #{record.remain,jdbcType=DECIMAL},
+      PARTPAY = #{record.partpay,jdbcType=VARCHAR},
+      PRICEREDUCE = #{record.pricereduce,jdbcType=DECIMAL},
+      CATEGORYTWO_ID = #{record.categorytwoId,jdbcType=DECIMAL},
+      HOT = #{record.hot,jdbcType=DECIMAL},
+      PRICE = #{record.price,jdbcType=DECIMAL},
+      PUBLISH = #{record.publish,jdbcType=VARCHAR},
+      PARAMETER = #{record.parameter,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PUBLISHDATE = #{record.publishdate,jdbcType=DECIMAL},
+      QUIT = #{record.quit,jdbcType=VARCHAR},
+      FREE = #{record.free,jdbcType=VARCHAR},
+      WRAPLIST = #{record.wraplist,jdbcType=VARCHAR},
+      INTRODUCTION = #{record.introduction,jdbcType=VARCHAR},
+      SELLNUM = #{record.sellnum,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.briup.bean.Product" >
+    update PRODUCT
+    <set >
+      <if test="img != null" >
+        IMG = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="clickrate != null" >
+        CLICKRATE = #{clickrate,jdbcType=DECIMAL},
+      </if>
+      <if test="remain != null" >
+        REMAIN = #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="partpay != null" >
+        PARTPAY = #{partpay,jdbcType=VARCHAR},
+      </if>
+      <if test="pricereduce != null" >
+        PRICEREDUCE = #{pricereduce,jdbcType=DECIMAL},
+      </if>
+      <if test="categorytwoId != null" >
+        CATEGORYTWO_ID = #{categorytwoId,jdbcType=DECIMAL},
+      </if>
+      <if test="hot != null" >
+        HOT = #{hot,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="publish != null" >
+        PUBLISH = #{publish,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null" >
+        PARAMETER = #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="publishdate != null" >
+        PUBLISHDATE = #{publishdate,jdbcType=DECIMAL},
+      </if>
+      <if test="quit != null" >
+        QUIT = #{quit,jdbcType=VARCHAR},
+      </if>
+      <if test="free != null" >
+        FREE = #{free,jdbcType=VARCHAR},
+      </if>
+      <if test="wraplist != null" >
+        WRAPLIST = #{wraplist,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        INTRODUCTION = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="sellnum != null" >
+        SELLNUM = #{sellnum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.briup.bean.Product" >
+    update PRODUCT
+    set IMG = #{img,jdbcType=VARCHAR},
+      CLICKRATE = #{clickrate,jdbcType=DECIMAL},
+      REMAIN = #{remain,jdbcType=DECIMAL},
+      PARTPAY = #{partpay,jdbcType=VARCHAR},
+      PRICEREDUCE = #{pricereduce,jdbcType=DECIMAL},
+      CATEGORYTWO_ID = #{categorytwoId,jdbcType=DECIMAL},
+      HOT = #{hot,jdbcType=DECIMAL},
+      PRICE = #{price,jdbcType=DECIMAL},
+      PUBLISH = #{publish,jdbcType=VARCHAR},
+      PARAMETER = #{parameter,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PUBLISHDATE = #{publishdate,jdbcType=DECIMAL},
+      QUIT = #{quit,jdbcType=VARCHAR},
+      FREE = #{free,jdbcType=VARCHAR},
+      WRAPLIST = #{wraplist,jdbcType=VARCHAR},
+      INTRODUCTION = #{introduction,jdbcType=VARCHAR},
+      SELLNUM = #{sellnum,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

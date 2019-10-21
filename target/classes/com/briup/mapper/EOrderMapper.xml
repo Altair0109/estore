@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.mapper.EOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.briup.bean.EOrder" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="RECEIVENAME" property="receivename" jdbcType="VARCHAR" />
+    <result column="DOB" property="dob" jdbcType="DECIMAL" />
+    <result column="RECEIVEPHONE" property="receivephone" jdbcType="VARCHAR" />
+    <result column="PAYSTATUS" property="paystatus" jdbcType="DECIMAL" />
+    <result column="RECEIVEADDRESS" property="receiveaddress" jdbcType="VARCHAR" />
+    <result column="SUM" property="sum" jdbcType="DECIMAL" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ORDERID, RECEIVENAME, DOB, RECEIVEPHONE, PAYSTATUS, RECEIVEADDRESS, SUM, CUSTOMER_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.briup.bean.EOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from E_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from E_ORDER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from E_ORDER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.briup.bean.EOrderExample" >
+    delete from E_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.briup.bean.EOrder" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="id" order="BEFORE" >
+      select dep_seq.nextVal from dual
+    </selectKey>
+    insert into E_ORDER (ID, ORDERID, RECEIVENAME, 
+      DOB, RECEIVEPHONE, PAYSTATUS, 
+      RECEIVEADDRESS, SUM, CUSTOMER_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{orderid,jdbcType=VARCHAR}, #{receivename,jdbcType=VARCHAR}, 
+      #{dob,jdbcType=DECIMAL}, #{receivephone,jdbcType=VARCHAR}, #{paystatus,jdbcType=DECIMAL}, 
+      #{receiveaddress,jdbcType=VARCHAR}, #{sum,jdbcType=DECIMAL}, #{customerId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.briup.bean.EOrder" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="id" order="BEFORE" >
+      select dep_seq.nextVal from dual
+    </selectKey>
+    insert into E_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="orderid != null" >
+        ORDERID,
+      </if>
+      <if test="receivename != null" >
+        RECEIVENAME,
+      </if>
+      <if test="dob != null" >
+        DOB,
+      </if>
+      <if test="receivephone != null" >
+        RECEIVEPHONE,
+      </if>
+      <if test="paystatus != null" >
+        PAYSTATUS,
+      </if>
+      <if test="receiveaddress != null" >
+        RECEIVEADDRESS,
+      </if>
+      <if test="sum != null" >
+        SUM,
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=DECIMAL},
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="receivename != null" >
+        #{receivename,jdbcType=VARCHAR},
+      </if>
+      <if test="dob != null" >
+        #{dob,jdbcType=DECIMAL},
+      </if>
+      <if test="receivephone != null" >
+        #{receivephone,jdbcType=VARCHAR},
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveaddress != null" >
+        #{receiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=DECIMAL},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.briup.bean.EOrderExample" resultType="java.lang.Integer" >
+    select count(*) from E_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update E_ORDER
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderid != null" >
+        ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivename != null" >
+        RECEIVENAME = #{record.receivename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dob != null" >
+        DOB = #{record.dob,jdbcType=DECIMAL},
+      </if>
+      <if test="record.receivephone != null" >
+        RECEIVEPHONE = #{record.receivephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paystatus != null" >
+        PAYSTATUS = #{record.paystatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.receiveaddress != null" >
+        RECEIVEADDRESS = #{record.receiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sum != null" >
+        SUM = #{record.sum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerId != null" >
+        CUSTOMER_ID = #{record.customerId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update E_ORDER
+    set ID = #{record.id,jdbcType=DECIMAL},
+      ORDERID = #{record.orderid,jdbcType=VARCHAR},
+      RECEIVENAME = #{record.receivename,jdbcType=VARCHAR},
+      DOB = #{record.dob,jdbcType=DECIMAL},
+      RECEIVEPHONE = #{record.receivephone,jdbcType=VARCHAR},
+      PAYSTATUS = #{record.paystatus,jdbcType=DECIMAL},
+      RECEIVEADDRESS = #{record.receiveaddress,jdbcType=VARCHAR},
+      SUM = #{record.sum,jdbcType=DECIMAL},
+      CUSTOMER_ID = #{record.customerId,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.briup.bean.EOrder" >
+    update E_ORDER
+    <set >
+      <if test="orderid != null" >
+        ORDERID = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="receivename != null" >
+        RECEIVENAME = #{receivename,jdbcType=VARCHAR},
+      </if>
+      <if test="dob != null" >
+        DOB = #{dob,jdbcType=DECIMAL},
+      </if>
+      <if test="receivephone != null" >
+        RECEIVEPHONE = #{receivephone,jdbcType=VARCHAR},
+      </if>
+      <if test="paystatus != null" >
+        PAYSTATUS = #{paystatus,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveaddress != null" >
+        RECEIVEADDRESS = #{receiveaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        SUM = #{sum,jdbcType=DECIMAL},
+      </if>
+      <if test="customerId != null" >
+        CUSTOMER_ID = #{customerId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.briup.bean.EOrder" >
+    update E_ORDER
+    set ORDERID = #{orderid,jdbcType=VARCHAR},
+      RECEIVENAME = #{receivename,jdbcType=VARCHAR},
+      DOB = #{dob,jdbcType=DECIMAL},
+      RECEIVEPHONE = #{receivephone,jdbcType=VARCHAR},
+      PAYSTATUS = #{paystatus,jdbcType=DECIMAL},
+      RECEIVEADDRESS = #{receiveaddress,jdbcType=VARCHAR},
+      SUM = #{sum,jdbcType=DECIMAL},
+      CUSTOMER_ID = #{customerId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>
